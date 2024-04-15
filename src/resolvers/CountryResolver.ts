@@ -21,12 +21,24 @@ export class CountryResolver {
         return country;
     }
 
+    @Mutation(() => Boolean)
+    async deleteCountry(@Arg("code") code: string): Promise<boolean> {
+        const country = await Country.findOne({ where: { code } });
+        if (!country) {
+            throw new Error("Country not found");
+        }
+
+        await Country.delete({ code });
+
+        return true;
+    }
+
     @Query(() => [Country])
     async countries(): Promise<Country[]> {
         return Country.find();
     }
 
-    @Query(() => Country, { nullable: true }) // Indique que la requête peut renvoyer null
+    @Query(() => Country, { nullable: true })
     async countryByCode(@Arg("code") code: string): Promise<Country | null> {
         return Country.findOne({ where: { code } });
     }
