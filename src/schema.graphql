@@ -1,0 +1,12 @@
+# src/schema.graphql
+
+type Mutation {
+  createCountry(code: String!, name: String!, emoji: String!): Country
+}
+
+type Country {
+  id: ID!
+  code: String!
+  name: String!
+  emoji: String!
+}
